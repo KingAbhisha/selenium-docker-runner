@@ -4,24 +4,16 @@ pipeline{
 
     stages{
 
-        stage('Cleanup Previous Containers') {
+        stage('Start-Grid') {
             steps {
-                bat 'docker-compose down --volumes || echo "No previous containers to remove"'
-                bat 'docker system prune -f'
+                bat "docker-compose -f grid.yaml up -d"
             }
         }
 
 
         stage('Run Test'){
             steps{
-                bat "docker-compose up --scale chrome=2 --scale firefox=2"
-            }
-        }
-
-        stage('Bring down grid'){
-
-            steps{
-                bat "docker-compose down"
+                bat "docker-compose -f test-suites up"
             }
         }
     }
