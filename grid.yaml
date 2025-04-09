@@ -10,7 +10,7 @@ services:
       - hub
     deploy:
       replicas: 1
-    evn_file: .env
+    env_file: .env
   firefox:
     image: selenium/node-firefox:4.27.0
     shm_size: 2g
@@ -18,4 +18,4 @@ services:
       - hub
     deploy:
       replicas: 1
-    evn_file: .env
+    env_file: .env
