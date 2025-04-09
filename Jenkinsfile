@@ -17,4 +17,5 @@ pipeline{
                 bat "docker system prune -f"
             }
         }
+    }
 }
