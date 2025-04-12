@@ -3,7 +3,7 @@ pipeline{
     agent any
 
     parameters {
-        choice choices: ['Chrome', 'FireFox'], description: 'Select the browser.', name: 'BROWSER'
+        choice choices: ['chrome', 'firefox'], description: 'Select the browser.', name: 'BROWSER'
     }
 
 
