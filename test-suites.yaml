@@ -2,7 +2,7 @@ services:
   vendor-portal:
     image: kingabhisha/selenium-docker-runnerfile
     environment:
-    - BROWSER=chrome
+    - BROWSER
     - HUB_HOST=hub
     - THREAD_COUNT=3
     - TEST_SUITE=vendor-portal.xml
@@ -13,7 +13,7 @@ services:
   flight-reservation:
     image: kingabhisha/selenium-docker-runnerfile
     environment:
-    - BROWSER=firefox
+    - BROWSER
     - HUB_HOST=hub
     - THREAD_COUNT=4
     - TEST_SUITE=flight-reservation.xml
