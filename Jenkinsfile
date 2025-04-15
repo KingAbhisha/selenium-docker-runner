@@ -12,7 +12,7 @@ pipeline{
         stage('Start-Grid') {
             steps {
                 bat "docker-compose -f grid.yaml up --scale ${params.BROWSER}=2 -d"
-                sleep(time: 10, unit: 'SECONDS')  // Give nodes time to boot up
+                sleep(time: 30, unit: 'SECONDS')  // Give nodes time to boot up
             }
         }
 
