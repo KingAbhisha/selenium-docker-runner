@@ -2,6 +2,8 @@ services:
   hub:
     image: selenium/hub:4.27.0
     container_name: selenium-hub
+    ports:
+      - "4444:4444"
 
   chrome:
     image: selenium/node-chrome:4.27.0
@@ -11,6 +13,12 @@ services:
     deploy:
       replicas: 0
     env_file: .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/wd/hub/status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
   firefox:
     image: selenium/node-firefox:4.27.0
     shm_size: 2g
@@ -19,3 +27,8 @@ services:
     deploy:
       replicas: 0
     env_file: .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5555/wd/hub/status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
