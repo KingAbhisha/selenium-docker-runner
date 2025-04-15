@@ -1,13 +1,11 @@
-pipeline{
-
+pipeline {
     agent any
 
     parameters {
         choice choices: ['chrome', 'firefox'], description: 'Select the browser.', name: 'BROWSER'
     }
 
-
-    stages{
+    stages {
 
         stage('Start-Grid') {
             steps {
@@ -16,21 +14,26 @@ pipeline{
             }
         }
 
-
-        stage('Run Test'){
-            steps{
+        stage('Run Test') {
+            steps {
                 bat "docker-compose -f test-suites.yaml up"
+                script {
+                    if (fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/volume/node/workspace/SELENIUM_DOCKER_RUNNER/flight-reservation/testng-failed.xml') ||
+                        fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/volume/node/workspace/SELENIUM_DOCKER_RUNNER/vendor-portal/testng-failed.xml')) {
+                        error('failed tests found')
+                    }
+                }
             }
         }
     }
-    post{
-        always{
+
+    post {
+        always {
             bat "docker-compose -f grid.yaml down"
             bat "docker-compose -f test-suites.yaml down"
             bat 'xcopy /E /Y "D:\\Project\\selenium-docker-master\\selenium-docker-master\\03-automation-framework\\selenium-docker\\test-output-results\\" "D:\\Project\\selenium-docker-master\\selenium-docker-master\\03-automation-framework\\selenium-docker\\volume\\node\\workspace\\SELENIUM_DOCKER_RUNNER"'
             archiveArtifacts artifacts: 'flight-reservation/emailable-report.html', followSymlinks: false
             archiveArtifacts artifacts: 'vendor-portal/emailable-report.html', followSymlinks: false
-
         }
     }
 }
