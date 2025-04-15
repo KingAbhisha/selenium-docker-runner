@@ -16,10 +16,11 @@ pipeline {
 
         stage('Run Test') {
             steps {
-                bat "docker-compose -f test-suites.yaml up"
+                bat "docker-compose -f test-suites.yaml up --pull=always"
                 script {
-                    if (fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/volume/node/workspace/SELENIUM_DOCKER_RUNNER/flight-reservation/testng-failed.xml') ||
-                        fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/volume/node/workspace/SELENIUM_DOCKER_RUNNER/vendor-portal/testng-failed.xml')) {
+                    if (fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/test-output-results/flight-reservation/testng-failed.xml') ||
+                        fileExists('D:/Project/selenium-docker-master/selenium-docker-master/03-automation-framework/selenium-docker/test-output-results/vendor-portal/testng-failed.xml')) 
+                    {
                         error('failed tests found')
                     }
                 }
